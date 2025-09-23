@@ -67,14 +67,22 @@ public abstract class Game {
                 isGameOver = true;
             }
         }
-
+        finishGame();
         displayEndGameMessage();
     }
+    protected  void finishGame() {
+        // 사용자에게 한판더 할지 물어보기
+        // Y/N 응답받기
 
+    }
     /**
      * Display end game message based on win/lose status
      */
     protected void displayEndGameMessage() {
+        /*
+        * 몇번 이겼는지,몇번 플레이했는지 사용자에게 알려준다.
+        *
+         */
         // TODO
         // print different strings depends on game result (win or lose)
         // shows up total statistics
