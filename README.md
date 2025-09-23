@@ -58,4 +58,15 @@ List와 같은 기본 자료구조 활용법을 익힌다.
 - 예외 처리: 사용자가 숫자가 아닌 값을 입력할 경우 `IllegalArgumentException`을 발생시키고, 적절한 오류 메시지를 출력한 후 다시 입력을 받도록 한다.
 
 ### 힌트
-- Math.random() 사용법을 알아보세요.
+- Math.random() 사용법을 알아보세요.-<br><br>
+
+---
+## 구현 기능 목록
+
+- [ ] Math.random()으로 난수 선택
+- [ ] 난수 값 number 저장
+- [ ] 입력 값 input 받기
+- [ ] 조건문 number > input = 더 낮게, number < input = 더 높게
+- [ ] 맞으면 정답입니다.
+- [ ] cnt = 7, cnt가 음수로 가면 게임 오버!와 함께 number 공개
+- [ ] 전체적으로 while로 감싸서 Y/N(대소문자 구분없이) 받아서 N이들어오면 break
