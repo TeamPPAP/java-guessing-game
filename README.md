@@ -63,9 +63,12 @@ List와 같은 기본 자료구조 활용법을 익힌다.
 ---
 ## 구현 기능 목록
 
+### 입력 
+- [ ] 입력 값 input 받기
+
+### 난수
 - [ ] Math.random()으로 난수 선택
 - [ ] 난수 값 number 저장
-- [ ] 입력 값 input 받기
 - [ ] 조건문 number > input = 더 낮게, number < input = 더 높게
 - [ ] 맞으면 정답입니다.
 - [ ] cnt = 7, cnt가 음수로 가면 게임 오버!와 함께 number 공개
