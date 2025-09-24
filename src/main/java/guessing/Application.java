@@ -36,15 +36,14 @@ public class Application {
 
     private boolean compareToAnswer(int answerNumber, int inputNum) {
         if (answerNumber < inputNum) {
-            System.out.print("더 낮게! ");
+            System.out.print("더 낮게❗ ");
             return false;
         }
 
         if (answerNumber > inputNum) {
-            System.out.print("더 높게! ");
+            System.out.print("더 높게❗ ");
             return false;
         }
-        System.out.println("정답입니다");
         return true;
     }
 
@@ -60,7 +59,6 @@ public class Application {
     }
 
     private void runNumberGuessing() {
-        // TODO: 실행 코드 작성
         Application app = new Application();
         int answerNumber = app.getAnswerNumber(100); // 정답 숫자
         System.out.println(answerNumber + "임의");
@@ -68,7 +66,7 @@ public class Application {
         int chance = 7;
         int maxChance = chance;
 
-        System.out.println("1부터 100까지 사이의 숫자를 맞혀보세요!");
+        System.out.println("1부터 100까지 사이의 숫자를 맞혀보세요❗ (남은 기회: " + chance + "번)");
 
         boolean flag = false;
         while (!flag) {
