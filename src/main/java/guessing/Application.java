@@ -9,8 +9,24 @@ public class Application {
         boolean isGameOver = false;
         do {
             app.runNumberGuessing();
-        } while (!isGameOver);
+            if(!app.askPlayAgain()){
+                System.out.println("Game Over❗");
+                break;
+            }
 
+        } while (!isGameOver);
+    }
+
+    private boolean askPlayAgain(){
+        boolean result = false;
+        System.out.println("\n한판 더 하시겠습니까❓ [Y/N]");
+        Scanner sc = new Scanner(System.in);
+        String answer = sc.nextLine();
+
+        if(answer.equals("Y"))
+            result = true;
+
+        return result;
     }
 
     // TODO : Math.random에 대해 공부 필요
@@ -36,6 +52,13 @@ public class Application {
         return --chance;
     }
 
+    private int promptNumber() {
+        System.out.print("숫자를 입력하세요:");
+        Scanner sc = new Scanner(System.in);
+        int input =  sc.nextInt();
+        return input;
+    }
+
     private void runNumberGuessing() {
         // TODO: 실행 코드 작성
         Application app = new Application();
@@ -49,18 +72,18 @@ public class Application {
 
         boolean flag = false;
         while (!flag) {
-            System.out.print("숫자를 입력하세요:");
-            Scanner sc = new Scanner(System.in);
-            int inputNum = sc.nextInt();
+            int inputNum = promptNumber();
 
             flag = app.compareToAnswer(answerNumber, inputNum);
             chance = app.reduceChance(chance);
 
             if (!flag) {
-                System.out.println("남은 기회: " + chance);
-            } else {
-                System.out.println((maxChance - chance)+"번 만에 맞췄습니다.");
+                System.out.println("(남은 기회: " + chance + "번)\n");
+                continue;
             }
+
+            System.out.println((maxChance - chance)+"번 만에 맞췄습니다.");
+
         }
     }
 }
