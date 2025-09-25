@@ -15,10 +15,16 @@ public class Application {
          *  -> 그대로 loop 탈출 후 종료
          */
 
-//        Player player1 = new Player();
-//        Scanner scanner = new Scanner(System.in);
-//        GuessingNumber game1 = new GuessingNumber();
+        Player player1 = new Player();
+        Scanner scanner = new Scanner(System.in);
+        GuessingNumber game1 = new GuessingNumber();
+        do {
+            game1.playGame();
+            game1.isContinueGame();
 
+        } while( game1.isContinueGame())
+
+        System.out.println("사요나라!");
     }
 
 }

@@ -9,10 +9,11 @@ public class GuessingNumber extends Game {
     private int answer;
     private int chance;
     private final int MAX_CHANCE = 7;
+    private boolean continueGame = false;
+
 
     public GuessingNumber(Player player, Scanner scanner) {
         super(player, scanner);
-        // this.answer = (int) (Math.random() * 100) + 1;
         this.answer = 0;
         this.chance = 0;
         /*
@@ -30,6 +31,18 @@ public class GuessingNumber extends Game {
          * 사용자에게 1부터 100사이 정수를 입력하도록 제시하기 ?
          * 값이 작은지 큰지 판단하여 결과 및 남은 횟수 제시 ?
          */
+        this.answer = new Random().nextInt(100) + 1;
+        this.chance = MAX_CHANCE;
+        int input = getIntegerInput(this.scanner,"1부터 100 사이의 숫자를 맞춰보세요! (남은기회: " + chance + "번)");
+        if(input == this.answer) {
+            System.out.println(getRandomWinMessage());
+        } else if(input > this.answer) {
+            chance--;
+            System.out.println("더 낮게! (남은기회: " + chance + "번)");
+        } else if(input < this.answer){
+            chance--;
+            System.out.println("더 높게! (남은기회: " + chance + "번)");
+        }
     }
 
     @Override
@@ -42,6 +55,15 @@ public class GuessingNumber extends Game {
          * 틀린 경우 -> 높은지 낮은지 확인하여 추가 힌트 부여
          *         -> 남은 기회 카운트
          */
+        int input = getIntegerInput(this.scanner,"숫자를 입력하세요!");
+        if(input == this.answer) {
+            System.out.println(getRandomWinMessage());
+        } else if(input > this.answer) {
+            chance--;
+            System.out.println("더 낮게! (남은기회: " + chance + "번)");
+        } else if(input < this.answer){
+            chance--;
+            System.out.println("더 높게! (남은기회: " + chance + "번)");
     }
 
     @Override
@@ -57,7 +79,8 @@ public class GuessingNumber extends Game {
          * 사용자가 입력한 값이랑 컴퓨터가 생성한 값이 같은지 확인
          * 남은 횟수가 0보다 크거나 같은지 확인
          */
-        return false;
+            return input == this.answer;
+
     }
 
     @Override
@@ -66,7 +89,8 @@ public class GuessingNumber extends Game {
          *
          * 남은횟수가 0이면 진다
          */
-        return false;
+        return this.chance == 0;
+
     }
 
     @Override
@@ -77,6 +101,8 @@ public class GuessingNumber extends Game {
          *  -> GuessingNumber 객체를 호출한 main() 에서 게임을 재시작할지 여부를 판단하는 플래그로 사용할것
          * 게임의 결과를 플레이어 객체에 저장
          */
+        this.continueGame = getYesNoConfirmation(this.scanner,"한 판 더 하시겠습니까?");
+
     }
 
     @Override
@@ -85,3 +111,7 @@ public class GuessingNumber extends Game {
     }
 
 }
+
+    public boolean isContinueGame() {
+        return continueGame;
+    }

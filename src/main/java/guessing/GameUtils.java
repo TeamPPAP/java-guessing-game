@@ -62,6 +62,21 @@ public class GameUtils {
      * @param max maximum value to set valid range
      * @return valid integer
      */
+
+    public static int getIntegerInput(Scanner scanner,String prompt) {
+        while (true) {
+            System.out.print(prompt + ":");
+            String input = scanner.nextLine().trim();
+
+            try {
+                int value = Integer.parseInt(input);
+                return value;
+            } catch (IllegalAgumentException e) {
+                System.out.println("유효한 숫자를 입력해주세요");
+            }
+
+        }
+    }
     public static int getIntegerInput(Scanner scanner, String prompt, int min, int max) {
         while (true) {
             System.out.print(prompt + " (" + min + "-" + max + "): ");
