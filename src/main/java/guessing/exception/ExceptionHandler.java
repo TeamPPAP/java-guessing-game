@@ -32,7 +32,7 @@ public class ExceptionHandler {
      *     }
      * </pre>
      */
-    public <T> T run(Supplier<T> callback) {
+    public static <T> T run(Supplier<T> callback) {
         while (true) {
             try {
                 return callback.get();
