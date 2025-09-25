@@ -13,10 +13,16 @@ public abstract class Game {
     protected boolean isPlayerWon;
 
     /**
+     * Non-arg constructor cannot be called from outside
+     */
+    private Game() {}
+
+    /**
      * Constructor initializes the game with a player and scanner
      */
     public Game(Player player, Scanner scanner) {
-        // TODO
+        this.player = player;
+        this.scanner = scanner;
     }
 
     /**
@@ -67,14 +73,17 @@ public abstract class Game {
                 isGameOver = true;
             }
         }
+
         finishGame();
         displayEndGameMessage();
     }
-    protected  void finishGame() {
-        // 사용자에게 한판더 할지 물어보기
-        // Y/N 응답받기
 
-    }
+    /**
+     * Abstract method to finish the game
+     * Each game implementation will define how to finish
+     */
+    public abstract void finishGame();
+
     /**
      * Display end game message based on win/lose status
      */

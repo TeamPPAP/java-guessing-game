@@ -3,7 +3,8 @@ package guessing;
 import java.util.*;
 
 /**
- * GameUtils provides common utility functions for guessing games
+ * GameUtils provides common utility functions for games
+ * GameUtils 클래스는 게임을 진행하면서 필요한 공통적인 유틸리티 함수들을 제공함
  */
 public class GameUtils {
 
@@ -30,6 +31,7 @@ public class GameUtils {
 
     /**
      * Convert string to uppercase and trim whitespace
+     * 스트링을 모두 대문자로 변환하고 공백, 개행문자들을 제거함
      * @param input
      * @return
      */
@@ -40,26 +42,42 @@ public class GameUtils {
 
     /**
      * Get user confirmation (yes/no)
+     * 유저의 확인을 받음 (yes/no)
      * @param scanner
      * @param prompt
      * @return
      */
     public static boolean getYesNoConfirmation(Scanner scanner, String prompt) {
-        // TODO
-        return true;
+        System.out.print(prompt + " (y/n): ");
+        String response = scanner.nextLine().trim().toLowerCase();
+        return response.startsWith("y");
     }
 
     /**
      * Get integer input with validation within a range
-     * @param scanner
-     * @param prompt
-     * @param min
-     * @param max
-     * @return
+     * 주어진 정해진 범위 내의 정수를 입력받음
+     * @param scanner pre-defined reused scanner object
+     * @param prompt interactive message to explain
+     * @param min minimum value to set valid range
+     * @param max maximum value to set valid range
+     * @return valid integer
      */
     public static int getIntegerInput(Scanner scanner, String prompt, int min, int max) {
-       // TODO
-        return 0;
+        while (true) {
+            System.out.print(prompt + " (" + min + "-" + max + "): ");
+            String input = scanner.nextLine().trim();
+
+            try {
+                int value = Integer.parseInt(input);
+                if (value >= min && value <= max) {
+                    return value;
+                } else {
+                    System.out.println("Please enter a number between " + min + " and " + max + ".");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a valid number.");
+            }
+        }
     }
 
     /**
@@ -75,12 +93,12 @@ public class GameUtils {
 
     /**
      * Create a simple separator line
+     * 콘솔 화면에 구분선을 생성
      * @param width
      * @return
      */
     public static String createSeparator(int width) {
-        // TODO
-        return "";
+        return "=".repeat(width);
     }
 
     /**
@@ -95,6 +113,7 @@ public class GameUtils {
 
     /**
      * Generate a random encouragement message for wins
+     * 게임에서 승리했을때 보여줄 랜덤 메시지를 생성함
      * @return
      */
     public static String getRandomWinMessage() {
@@ -110,13 +129,13 @@ public class GameUtils {
                 "Perfect!",
                 "Incredible!"
         };
-
         Random random = new Random();
         return messages[random.nextInt(messages.length)];
     }
 
     /**
      * Generate a random encouragement message for losses
+     * 게임에서 패배했을때 보여줄 랜덤 메시지를 생성함
      * @return
      */
     public static String getRandomLoseMessage() {
@@ -132,13 +151,13 @@ public class GameUtils {
                 "You've got this!",
                 "Try again!"
         };
-
         Random random = new Random();
         return messages[random.nextInt(messages.length)];
     }
 
     /**
      * Convert win percentage to performance rating
+     * 승리 비율을 아이콘으로 변환함
      * @param winPercentage
      * @return
      */
@@ -162,6 +181,7 @@ public class GameUtils {
 
     /**
      * Clear the console (works on most terminals)
+     * 콘솔창의 텍스트들을 모두 지움
      */
     public static void clearScreen() {
         try {
