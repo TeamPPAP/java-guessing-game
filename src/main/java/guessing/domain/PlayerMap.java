@@ -30,11 +30,11 @@ public class PlayerMap {
         return playerMap.get(id).returnSuccess();
     }
 
-    public String getBigger(int id) {
-        return playerMap.get(id).getBigger();
+    public String getBigger(int id, int max) {
+        return playerMap.get(id).getBigger(max);
     }
 
-    public String getLower(int id) {
-        return playerMap.get(id).getLower();
+    public String getLower(int id, int max) {
+        return playerMap.get(id).getLower(max);
     }
 }

@@ -9,31 +9,19 @@ public class ChanceEntity {
         this.chance = chance;
     }
 
-    public Player getPlayer() {
-        return player;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-
     public void increaseChance() {
         chance.plus();
     }
 
-    public void setChance(Chance chance) {
-        this.chance = chance;
-    }
-
     public String returnSuccess() {
-        return player.getName() + "님이" + chance.getChance() + "번 만에 맞혔습니다!";
+        return player.getName() + "님이 " + chance.getChance() + "번 만에 맞혔습니다!";
     }
 
-    public String getBigger(){
-        return "더 높게! (남은 기회: " + chance.getChance() + "번)";
+    public String getBigger(int max) {
+        return "더 높게! (남은 기회: " + (max - chance.getChance()) + "번)";
     }
 
-    public String getLower() {
-        return "더 낮게! (남은 기회: " + chance.getChance() + "번)";
+    public String getLower(int max) {
+        return "더 낮게! (남은 기회: " + (max - chance.getChance()) + "번)";
     }
 }

@@ -14,13 +14,13 @@ public class ExceptionHandler {
      * 	    	try {
      * 	        	int money = inputView.askPurchaseMoney();
      * 	            return new LottoPurchaseMoney(money);
-     * 	                    } catch (IllegalArgumentException exception) {
+     *                        } catch (IllegalArgumentException exception) {
      *         		System.out.printf("[Error] " + exception.getMessage());
      *            }
      *         }
      *     }
      * </pre>
-     *
+     * <p>
      * 변경된 메소드
      *
      * <pre>
@@ -32,13 +32,28 @@ public class ExceptionHandler {
      *     }
      * </pre>
      */
-    public static <T> T run(Supplier<T> callback) {
+    public <T> T executeWithRetry(Supplier<T> callback) {
         while (true) {
             try {
                 return callback.get();
-            } catch (IllegalArgumentException exception) {
-                System.out.println(ERROR + exception.getMessage());
+            } catch (IllegalArgumentException e) {
+                System.out.println(ERROR + e.getMessage());
             }
+        }
+    }
+
+    public <T> T run(Supplier<T> callback) {
+        try {
+            return callback.get();
+        } catch (IllegalArgumentException e) {
+            System.out.println(ERROR + "잘못된 입력을 하셨습니다. 다시 입력해주세요.");
+            return null;
+        }
+    }
+
+    public void cause(boolean flag) {
+        if (flag) {
+            throw new IllegalStateException("잘못된 입력을 하셨습니다. 다시 입력해주세요.");
         }
     }
 }
