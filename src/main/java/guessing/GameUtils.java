@@ -9,6 +9,17 @@ import java.util.*;
 public class GameUtils {
 
     /**
+     * Get string input
+     * @param scanner
+     * @param prompt
+     * @return
+     */
+    public static String getStringInput(Scanner scanner, String prompt) {
+        System.out.print(prompt);
+        return scanner.nextLine().trim();
+    }
+
+    /**
      * Validate if input is a single letter
      * @param input
      * @return
@@ -54,6 +65,25 @@ public class GameUtils {
     }
 
     /**
+     * Get integer input without validation within a range
+     * 정수를 입력 받는 함수
+     * @param scanner
+     * @param prompt
+     * @return
+     */
+    public static int getIntegerInput(Scanner scanner,String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            String input = scanner.nextLine().trim();
+            try {
+                return Integer.parseInt(input);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Please enter a valid number");
+            }
+        }
+    }
+
+    /**
      * Get integer input with validation within a range
      * 주어진 정해진 범위 내의 정수를 입력받음
      * @param scanner pre-defined reused scanner object
@@ -62,26 +92,10 @@ public class GameUtils {
      * @param max maximum value to set valid range
      * @return valid integer
      */
-
-    public static int getIntegerInput(Scanner scanner,String prompt) {
-        while (true) {
-            System.out.print(prompt + ":");
-            String input = scanner.nextLine().trim();
-
-            try {
-                int value = Integer.parseInt(input);
-                return value;
-            } catch (IllegalAgumentException e) {
-                System.out.println("유효한 숫자를 입력해주세요");
-            }
-
-        }
-    }
     public static int getIntegerInput(Scanner scanner, String prompt, int min, int max) {
         while (true) {
             System.out.print(prompt + " (" + min + "-" + max + "): ");
             String input = scanner.nextLine().trim();
-
             try {
                 int value = Integer.parseInt(input);
                 if (value >= min && value <= max) {
@@ -102,8 +116,18 @@ public class GameUtils {
      * @return
      */
     public static String createHeader(String title, int width) {
-        // TODO
-        return "";
+        if (width < title.length() + 4) {
+            width = title.length() + 4;
+        }
+        StringBuilder header = new StringBuilder();
+        String border = "=".repeat(width);
+        header.append(border).append("\n");
+        int padding = (width - title.length()) / 2;
+        String leftPad = " ".repeat(padding);
+        String rightPad = " ".repeat(width - title.length() - padding);
+        header.append(leftPad).append(title).append(rightPad).append("\n");
+        header.append(border);
+        return header.toString();
     }
 
     /**
@@ -176,7 +200,7 @@ public class GameUtils {
      * @param winPercentage
      * @return
      */
-    public static String getPerformanceRating(double winPercentage) {
+    public static String getPerformanceRating(int winPercentage) {
         if (winPercentage >= 90) {
             return "🏆 Master";
         } else if (winPercentage >= 80) {

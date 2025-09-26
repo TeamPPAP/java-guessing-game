@@ -11,16 +11,26 @@ public class Player {
         this.winCount = 0;
         this.playCount = 0;
     }
-    // player name
-    // how many times that this player won
-    // how many times that this player played
 
-    // constructor with name + set won and played count to 0
+    public void playerWon() {
+        this.winCount += 1;
+        this.playCount += 1;
+    }
 
+    public void playerLose() {
+        this.playCount += 1;
+    }
 
+    public double getPlayerRatio() {
+        return (double) winCount / (double) playCount;
+    }
 
+    public String getName() {
+        return name;
+    }
 
-
-
-
+    @Override
+    public String toString() {
+        return name + " [Win: " + winCount + " / Total: " + playCount + "]";
+    }
 }

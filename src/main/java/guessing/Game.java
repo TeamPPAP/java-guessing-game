@@ -60,11 +60,9 @@ public abstract class Game {
      */
     public void playGame() {
         startGame();
-
         while (!isGameOver) {
             displayGameState();
             playTurn();
-
             if (checkWinCondition()) {
                 isPlayerWon = true;
                 isGameOver = true;
@@ -73,7 +71,6 @@ public abstract class Game {
                 isGameOver = true;
             }
         }
-
         finishGame();
         displayEndGameMessage();
     }
@@ -87,18 +84,23 @@ public abstract class Game {
     /**
      * Display end game message based on win/lose status
      */
-    protected void displayEndGameMessage() {
+    public void displayEndGameMessage() {
         /*
-        * 몇번 이겼는지,몇번 플레이했는지 사용자에게 알려준다.
-        *
+         * 몇번 이겼는지,몇번 플레이했는지 사용자에게 알려준다.
          */
-        // TODO
-        // print different strings depends on game result (win or lose)
-        // shows up total statistics
+        System.out.println(
+                "Your rank is: "
+                + GameUtils.getPerformanceRating((int) (player.getPlayerRatio() * 100)));
+        System.out.println(player.toString());
     }
 
     /**
      * Get the game name
      */
     public abstract String getGameName();
+
+    /**
+     * Get the game name localized
+     */
+    public abstract String getGameNameLocalized();
 }
