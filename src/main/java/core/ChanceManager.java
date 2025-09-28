@@ -26,7 +26,7 @@ public class ChanceManager {
     }
 
     public boolean isOverChance() {
-        return !(this.chance >= CHANCE_MIN_COUNT); // 1>1
+        return !(this.chance >= CHANCE_MIN_COUNT);
     }
 
     public String createChanceMessage () {
