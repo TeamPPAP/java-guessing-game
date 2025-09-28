@@ -9,7 +9,6 @@ public class Game {
     ChanceManager chanceManager;
 
     public Game() {
-        this.chanceManager = new ChanceManager();
         this.setAnswerNumber();
     }
 
@@ -21,31 +20,38 @@ public class Game {
         this.answerNumber = (int) Math.floor(Math.random()*(ANSWER_MAX_NUM+1));
     }
 
-    public void run () {
+    public int run () {
+        this.chanceManager = new ChanceManager(); //플레이어마다 새 기회를 부여받음
+
         System.out.println(answerNumber + "임의");
         System.out.println("1부터 100까지 사이의 숫자를 맞혀보세요❗" + chanceManager.createChanceMessage());
+
 
         boolean flag = false;
         while (!flag) {
             int inputNum = promptNumber();
             if(inputNum != 0)
-                flag = compareToAnswer(inputNum);
+                flag = compareToAnswer(inputNum); //true면 정답
 
             chanceManager.reduceChance();
 
-            if (chanceManager.isOverChance()) break; //1회가 남았는데 여기서 나가 버림
-
+            if (chanceManager.isOverChance()) break;
 
             if (!flag) {
                 System.out.println(chanceManager.createChanceMessage());
                 continue;
             }
 
-
-            System.out.println((chanceManager.getCHANCE_MAX_COUNT() - chanceManager.getChance())+"번 만에 맞췄습니다.");
+            return getAttemptsTaken();
         }
-
+        return -1;
     }
+
+    // TODO 사용자가 몇번 만에 맞췄는지에 반환
+    public int getAttemptsTaken() {
+        return chanceManager.getCHANCE_MAX_COUNT() - chanceManager.getChance();
+    }
+
     // 숫자 입력받기
     private int promptNumber() {
         System.out.print("숫자를 입력하세요:");
