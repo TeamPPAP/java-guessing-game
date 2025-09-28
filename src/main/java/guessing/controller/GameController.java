@@ -1,51 +1,86 @@
 package guessing.controller;
 
-import guessing.domain.Announce;
 import guessing.domain.GameRound;
+import guessing.domain.GameStatus;
 import guessing.domain.Num;
+import guessing.domain.RetryCommand;
+import guessing.domain.generator.NumberGenerator;
+import guessing.dto.RoundResult;
 import guessing.view.InputView;
+import guessing.view.OutputView;
 
 public class GameController {
-    InputView inputView = new InputView();
+    private final InputView inputView;
+    private final OutputView outputView;
+    private final NumberGenerator numberGenerator;
 
-    public boolean play(GameRound gameRound) {
-        System.out.println(gameRound.getRandomNumber());
+    public GameController(final InputView inputView,
+                          final OutputView outputView,
+                          final NumberGenerator numberGenerator) {
+        this.inputView = inputView;
+        this.outputView = outputView;
+        this.numberGenerator = numberGenerator;
+    }
 
-        Announce.START_MESSAGE.print();
-        Announce.REMAINING_COUNT_MESSAGE.print(gameRound.getCount());
+    public void run() {
+        do {
+            playGame();
+        } while (askForRestart());
+    }
+
+    private void playGame() {
+        int randomNumber = numberGenerator.generate();
+        GameRound round = new GameRound(randomNumber);
+
+        outputView.printGameStart(round.getRemainingCount());
 
         while (true) {
-            Num num;
+            Num guess = readValidNumber();
+            RoundResult result = round.guess(guess);
+            GameStatus status = result.getGameStatus();
+
+            if (status == GameStatus.WIN) {
+                outputView.printWin(round.getTryCount());
+                break;
+            }
+            
+            if (status == GameStatus.LOSE) {
+                outputView.printGameOver(round.getRandomNumber());
+                break;
+            }
+
+            outputView.printHint(result.getHint(), round.getRemainingCount());
+        }
+    }
+
+    private Num readValidNumber() {
+        while (true) {
             try {
-                int value = inputView.readNumber();
-                num = new Num(value);
+                int number = inputView.readNumber();
+                return new Num(number);
             } catch (IllegalArgumentException e) {
-                Announce.INPUT_ERROR.print();
-                continue;
-            }
-
-            Announce result = gameRound.inGameAnnounce(num.getValue());
-
-            result.print();
-
-            if (result.equals(Announce.HIGHER_MESSAGE)) {
-                Announce.REMAINING_COUNT_MESSAGE.print(gameRound.getCount());
-            }
-
-            if (result.equals(Announce.LOWER_MESSAGE)) {
-                Announce.REMAINING_COUNT_MESSAGE.print(gameRound.getCount());
-            }
-
-            if (result == Announce.WINNING_MESSAGE) {
-                Announce.TRY_COUNT_MESSAGE.print(gameRound.getTryCount());
-                return inputView.reTry();
-            }
-
-            if (gameRound.isOver()) {
-                Announce.GAME_OVER_MESSAGE.print();
-                Announce.RANDOM_NUMBER_RELEASE.print(gameRound.getRandomNumber());
-                return inputView.reTry();
+                outputView.printErrorMessage(e.getMessage());
             }
         }
     }
+
+    private boolean askForRestart() {
+        while (true) {
+            try {
+                return processRetryInput();
+            } catch (IllegalArgumentException e) {
+                outputView.printErrorMessage(e.getMessage());
+            }
+        }
+    }
+
+    private boolean processRetryInput() {
+        String input = inputView.readRetry();
+        RetryCommand command = RetryCommand.from(input);
+        if (command.isRetry()) {
+            outputView.printNewGameStart();
+        }
+        return command.isRetry();
+    }
 }
+

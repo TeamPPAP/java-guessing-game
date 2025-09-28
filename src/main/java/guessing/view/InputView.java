@@ -1,30 +1,26 @@
 package guessing.view;
 
-import guessing.domain.Announce;
+import static guessing.domain.Announce.INPUT_NUMBER_ERROR;
+import static guessing.domain.Announce.INPUT_NUMBER_MESSAGE;
+import static guessing.domain.Announce.RETRY_MESSAGE;
 
 import java.util.Scanner;
 
-import static guessing.domain.Announce.INPUT_NUMBER_MESSAGE;
-
 public class InputView {
-
     private final Scanner sc = new Scanner(System.in);
 
     public int readNumber() {
-        INPUT_NUMBER_MESSAGE.print();
-        return Integer.parseInt(sc.nextLine());
+        System.out.print(INPUT_NUMBER_MESSAGE.getMessage());
+        try {
+            return Integer.parseInt(sc.nextLine());
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(INPUT_NUMBER_ERROR.getMessage());
+        }
     }
 
-    public boolean reTry() {
-        while (true) {
-            Announce.RETRY_MESSAGE.print();
-            String retry = sc.nextLine().toUpperCase();
-
-            if (retry.equals("Y")) {
-                return true;
-            } else if (retry.equals("N")) {
-                return false;
-            }
-        }
+    public String readRetry() {
+        System.out.println();
+        System.out.print(RETRY_MESSAGE.getMessage());
+        return sc.nextLine().toUpperCase();
     }
 }

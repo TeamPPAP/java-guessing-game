@@ -1,43 +1,56 @@
 package guessing.domain;
 
-import java.util.concurrent.ThreadLocalRandom;
+import guessing.dto.RoundResult;
 
 public class GameRound {
+    private static final int MIN_COUNT = 0;
+    private static final int MAX_COUNT = 7;
+
     private final int randomNumber;
-    private int count = 7;
-    private int tryCount = 1;
+    private int remainingCount;
+    private int tryCount;
 
-    public GameRound() {
-        this.randomNumber = ThreadLocalRandom.current().nextInt(1, 101);
+    public GameRound(final int randomNumber) {
+        this.randomNumber = randomNumber;
+        this.remainingCount = MAX_COUNT;
+        this.tryCount = MIN_COUNT;
     }
 
-    public Announce inGameAnnounce(int input) {
-        count--;
+    public RoundResult guess(final Num input) {
+        tryCount++;
+        remainingCount--;
 
-        if (randomNumber == input) {
-            return Announce.WINNING_MESSAGE;
-        } else if (randomNumber < input) {
-            tryCount++;
-            return Announce.LOWER_MESSAGE;
-        } else {
-            tryCount++;
-            return Announce.HIGHER_MESSAGE;
+        if (randomNumber == input.getValue()) {
+            return new RoundResult(GameStatus.WIN, Announce.WINNING_MESSAGE);
         }
+
+        if (remainingCount <= MIN_COUNT) {
+            return new RoundResult(GameStatus.LOSE, Announce.GAME_OVER_MESSAGE);
+        }
+
+        Announce hint = getHint(input);
+        return new RoundResult(GameStatus.ONGOING, hint);
     }
 
-    public boolean isOver() {
-        return count <= 0;
-    }
-
-    public int getCount() {
-        return count;
-    }
-
-    public int getTryCount() {
-        return tryCount;
+    private Announce getHint(final Num input) {
+        Announce hint;
+        if (randomNumber < input.getValue()) {
+            hint = Announce.LOWER_MESSAGE;
+        } else {
+            hint = Announce.HIGHER_MESSAGE;
+        }
+        return hint;
     }
 
     public int getRandomNumber() {
         return randomNumber;
+    }
+
+    public int getRemainingCount() {
+        return remainingCount;
+    }
+
+    public int getTryCount() {
+        return tryCount;
     }
 }
