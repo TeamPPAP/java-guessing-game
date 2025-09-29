@@ -85,9 +85,6 @@ public abstract class Game {
      * Display end game message based on win/lose status
      */
     public void displayEndGameMessage() {
-        /*
-         * 몇번 이겼는지,몇번 플레이했는지 사용자에게 알려준다.
-         */
         System.out.println(
                 "Your rank is: "
                 + GameUtils.getPerformanceRating((int) (player.getPlayerRatio() * 100)));

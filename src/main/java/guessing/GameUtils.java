@@ -20,38 +20,6 @@ public class GameUtils {
     }
 
     /**
-     * Validate if input is a single letter
-     * @param input
-     * @return
-     */
-    public static boolean isValidLetter(String input) {
-        // TODO
-        return true;
-    }
-
-    /**
-     * Validate if input is a word of specific length containing only letters
-     * @param input
-     * @param expectedLength
-     * @return
-     */
-    public static boolean isValidWord(String input, int expectedLength) {
-        // TODO
-        return true;
-    }
-
-    /**
-     * Convert string to uppercase and trim whitespace
-     * 스트링을 모두 대문자로 변환하고 공백, 개행문자들을 제거함
-     * @param input
-     * @return
-     */
-    public static String normalizeInput(String input) {
-        // TODO
-        return "";
-    }
-
-    /**
      * Get user confirmation (yes/no)
      * 유저의 확인을 받음 (yes/no)
      * @param scanner
@@ -79,32 +47,6 @@ public class GameUtils {
                 return Integer.parseInt(input);
             } catch (IllegalArgumentException e) {
                 System.out.println("Please enter a valid number");
-            }
-        }
-    }
-
-    /**
-     * Get integer input with validation within a range
-     * 주어진 정해진 범위 내의 정수를 입력받음
-     * @param scanner pre-defined reused scanner object
-     * @param prompt interactive message to explain
-     * @param min minimum value to set valid range
-     * @param max maximum value to set valid range
-     * @return valid integer
-     */
-    public static int getIntegerInput(Scanner scanner, String prompt, int min, int max) {
-        while (true) {
-            System.out.print(prompt + " (" + min + "-" + max + "): ");
-            String input = scanner.nextLine().trim();
-            try {
-                int value = Integer.parseInt(input);
-                if (value >= min && value <= max) {
-                    return value;
-                } else {
-                    System.out.println("Please enter a number between " + min + " and " + max + ".");
-                }
-            } catch (NumberFormatException e) {
-                System.out.println("Please enter a valid number.");
             }
         }
     }
@@ -138,16 +80,6 @@ public class GameUtils {
      */
     public static String createSeparator(int width) {
         return "=".repeat(width);
-    }
-
-    /**
-     * Format time duration from milliseconds to readable string
-     * @param milliseconds
-     * @return
-     */
-    public static String formatDuration(long milliseconds) {
-        // TODO
-        return "";
     }
 
     /**
@@ -217,26 +149,5 @@ public class GameUtils {
             return "🌱 Beginner";
         }
     }
-
-    /**
-     * Clear the console (works on most terminals)
-     * 콘솔창의 텍스트들을 모두 지움
-     */
-    public static void clearScreen() {
-        try {
-            if (System.getProperty("os.name").contains("Windows")) {
-                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-            } else {
-                System.out.print("\033[2J\033[H");
-                System.out.flush();
-            }
-        } catch (Exception e) {
-            // If clearing fails, just print some newlines
-            for (int i = 0; i < 50; i++) {
-                System.out.println();
-            }
-        }
-    }
-
 
 }

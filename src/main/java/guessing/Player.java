@@ -22,6 +22,7 @@ public class Player {
     }
 
     public double getPlayerRatio() {
+        if (playCount == 0) return 0.0;
         return (double) winCount / (double) playCount;
     }
 
