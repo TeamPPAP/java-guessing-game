@@ -1,7 +1,17 @@
 package guessing;
 
+import guessing.domain.Computer;
+import guessing.domain.NumberGenerator;
+import guessing.io.Input;
+import guessing.service.Game;
+import guessing.domain.MultiGameManager;
+
 public class Application {
+
     public static void main(String[] args) {
-        // TODO: 실행 코드 작성
+        Game game = new Game(new MultiGameManager(new Computer(new NumberGenerator())), new Input());
+
+        game.play();
+
     }
 }
