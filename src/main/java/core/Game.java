@@ -17,13 +17,12 @@ public class Game {
     }
 
     public void setAnswerNumber() {
-        this.answerNumber = (int) Math.floor(Math.random()*(ANSWER_MAX_NUM+1));
+        this.answerNumber = (int)(Math.random()*ANSWER_MAX_NUM)+1;
     }
 
     public int run () {
         this.chanceManager = new ChanceManager(); //플레이어마다 새 기회를 부여받음
 
-        System.out.println(answerNumber + "임의");
         System.out.println("1부터 100까지 사이의 숫자를 맞혀보세요❗" + chanceManager.createChanceMessage());
 
 
