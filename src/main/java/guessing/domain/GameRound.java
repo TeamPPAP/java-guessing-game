@@ -1,12 +1,10 @@
 package guessing.domain;
 
-import guessing.dto.RoundResult;
-
 public class GameRound {
     private static final int MIN_COUNT = 0;
     private static final int MAX_COUNT = 7;
-
     private final int randomNumber;
+    private Announce hint;
     private int remainingCount;
     private int tryCount;
 
@@ -16,30 +14,24 @@ public class GameRound {
         this.tryCount = MIN_COUNT;
     }
 
-    public RoundResult guess(final Num input) {
+    public GameStatus guess(final Num input) {
         tryCount++;
         remainingCount--;
 
-        if (randomNumber == input.getValue()) {
-            return new RoundResult(GameStatus.WIN, Announce.WINNING_MESSAGE);
+        if (randomNumber == input.value()) {
+            return GameStatus.WIN;
         }
 
         if (remainingCount <= MIN_COUNT) {
-            return new RoundResult(GameStatus.LOSE, Announce.GAME_OVER_MESSAGE);
+            return GameStatus.LOSE;
         }
 
-        Announce hint = getHint(input);
-        return new RoundResult(GameStatus.ONGOING, hint);
+        hint = getHint(input);
+        return GameStatus.ONGOING;
     }
 
     private Announce getHint(final Num input) {
-        Announce hint;
-        if (randomNumber < input.getValue()) {
-            hint = Announce.LOWER_MESSAGE;
-        } else {
-            hint = Announce.HIGHER_MESSAGE;
-        }
-        return hint;
+        return randomNumber < input.value() ? Announce.LOWER_MESSAGE : Announce.HIGHER_MESSAGE;
     }
 
     public int getRandomNumber() {
@@ -52,5 +44,9 @@ public class GameRound {
 
     public int getTryCount() {
         return tryCount;
+    }
+
+    public Announce getHint() {
+        return hint;
     }
 }
