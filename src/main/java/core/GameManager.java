@@ -89,7 +89,10 @@ public class GameManager {
     // TODO 우승자 출력
     public void announceWinner(List<Player> players) {
         Player winner = findMinTries(players);
-        System.out.println("우승자는 [" + winner.getId() + "]번 플레이어 입니다");
+        if (winner != null) {
+            System.out.println("우승자는 [" + winner.getId() + "]번 플레이어 입니다");
+        }
+        System.out.println("우승자가 없습니다.");
     }
 
     // TODO 우승자 계산
