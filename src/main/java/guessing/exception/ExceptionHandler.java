@@ -1,10 +1,11 @@
 package guessing.exception;
 
+import java.util.Optional;
 import java.util.function.Supplier;
 
 public class ExceptionHandler {
 
-    private static final String ERROR = "[ERROR] ";
+    private static final String ERROR = "[ERROR] 잘못된 입력을 하셨습니다. 다시 입력해주세요.";
 
     /**
      * 다음의 try-catch 로직을 함수형으로 변경할 수 있습니다.
@@ -42,18 +43,9 @@ public class ExceptionHandler {
         }
     }
 
-    public <T> T run(Supplier<T> callback) {
-        try {
-            return callback.get();
-        } catch (IllegalArgumentException e) {
-            System.out.println(ERROR + "잘못된 입력을 하셨습니다. 다시 입력해주세요.");
-            return null;
-        }
-    }
-
-    public void cause(boolean flag) {
+    public void cause(final boolean flag, final String message) {
         if (flag) {
-            throw new IllegalStateException("잘못된 입력을 하셨습니다. 다시 입력해주세요.");
+            throw new IllegalArgumentException(message);
         }
     }
 }

@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class PlayerMap {
-    private Map<Integer, ChanceEntity> playerMap;
+    private final Map<Integer, ChanceEntity> playerMap;
 
     public PlayerMap() {
         this.playerMap = new LinkedHashMap<>();
@@ -20,10 +20,6 @@ public class PlayerMap {
         ChanceEntity chanceEntity = playerMap.get(id);
         chanceEntity.increaseChance();
         playerMap.put(id, chanceEntity);
-    }
-
-    public ChanceEntity getPlayerResult(int id) {
-        return playerMap.get(id);
     }
 
     public String getSuccess(int id) {

@@ -6,14 +6,16 @@ import guessing.io.Input;
 
 public class Game {
     private static final int MAX_CHANCE = 7;
-    private final ExceptionHandler exceptionHandler = new ExceptionHandler();
-    private MultiGameManager gameManager;
 
-    private Input input;
+    private final ExceptionHandler exceptionHandler;
+    private final MultiGameManager gameManager;
 
-    public Game(MultiGameManager gameManager, Input input) {
+    private final Input input;
+
+    public Game(MultiGameManager gameManager, Input input, ExceptionHandler exceptionHandler) {
         this.gameManager = gameManager;
         this.input = input;
+        this.exceptionHandler = exceptionHandler;
     }
 
     public void play() {
@@ -32,9 +34,9 @@ public class Game {
     private String retry() {
         return exceptionHandler.executeWithRetry(() -> {
             System.out.println("한판 더 하시겠습니까?");
-            String retry = input.getInput();
-            exceptionHandler.cause(retry == null || retry.isBlank());
-            exceptionHandler.cause(!isAnswerYorN(retry));
+            String retry = input.getOptionalInput().orElseThrow(IllegalArgumentException::new);
+            exceptionHandler.cause(retry.isBlank(), "빈칸 또는 공백 값은 입력하실 수 없습니다.");
+            exceptionHandler.cause(!isAnswerYorN(retry), "Y 또는 N만 가능합니다.");
             return retry;
         });
     }
@@ -62,28 +64,23 @@ public class Game {
     }
 
     private boolean executeTurnWithRetry(int playerId) {
-        while (true) {
-            try {
-                return processPlayerTurn(playerId);
-            } catch (IllegalArgumentException e) {
-                System.out.println("잘못된 입력을 하셨습니다. 다시 입력해주세요.");
-            }
-        }
+        return exceptionHandler.executeWithRetry(() -> processPlayerTurn(playerId));
     }
 
     private boolean processPlayerTurn(int playerId) throws IllegalArgumentException {
         System.out.print("player " + playerId + "님 수를 입력해주세요: ");
-        int answer = gameManager.heardAnswer(input.getInput());
+        String answer = input.getOptionalInput().orElseThrow(IllegalArgumentException::new);
+        int guessingNumber = input.getGuessingNumber(answer);
 
         gameManager.exhaust(playerId);
-        String s = gameManager.isSuccessThenGetString(playerId, answer);
+        String s = gameManager.isSuccessThenGetString(playerId, guessingNumber);
 
         if (s != null) {
             System.out.println(s);
             return true;
         }
 
-        System.out.println(gameManager.notCorrect(playerId, answer, MAX_CHANCE));
+        System.out.println(gameManager.notCorrect(playerId, guessingNumber, MAX_CHANCE));
         return false;
     }
 
@@ -92,10 +89,7 @@ public class Game {
             System.out.print("플레이어의 수를 입력해주세요: ");
             String playerNum = input.getInput();
 
-            int p = gameManager.setPlayerNumber(playerNum);
-            if (p == 0) {
-                throw new IllegalArgumentException("플레이어 수는 1 이상이어야 합니다.");
-            }
+            int p = input.getPlayerNumber(playerNum);
 
             gameManager.setting(p);
             return p;

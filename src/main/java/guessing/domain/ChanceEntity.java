@@ -1,20 +1,13 @@
 package guessing.domain;
 
-public class ChanceEntity {
-    private Player player;
-    private Chance chance;
-
-    public ChanceEntity(Player player, Chance chance) {
-        this.player = player;
-        this.chance = chance;
-    }
+public record ChanceEntity(Player player, Chance chance) {
 
     public void increaseChance() {
         chance.plus();
     }
 
     public String returnSuccess() {
-        return player.getName() + "님이 " + chance.getChance() + "번 만에 맞혔습니다!";
+        return player.name() + "님이 " + chance.getChance() + "번 만에 맞혔습니다!";
     }
 
     public String getBigger(int max) {

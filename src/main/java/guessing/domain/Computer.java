@@ -1,7 +1,7 @@
 package guessing.domain;
 
 public class Computer {
-    private NumberGenerator numberGenerator;
+    private final NumberGenerator numberGenerator;
     private int randomNumber;
 
     public Computer(NumberGenerator numberGenerator) {
