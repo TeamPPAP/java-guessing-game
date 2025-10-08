@@ -9,6 +9,7 @@ public class GameManager {
     Game game;
 
     private final List<Player> players = new ArrayList<>(); // 각 플레이어별 기록을 쌓을 그릇
+    private final Scanner sc = new Scanner(System.in);
 
     public void run () {
         boolean shouldShutdown = false;
@@ -61,7 +62,6 @@ public class GameManager {
     public boolean askPlayAgain(){
         boolean result = false;
         System.out.println("\n한판 더 하시겠습니까❓ [Y/N]");
-        Scanner sc = new Scanner(System.in);
 
         try {
             String answer = sc.nextLine().toUpperCase();
@@ -83,7 +83,6 @@ public class GameManager {
     // TODO 플레이어 수 입력
     public int promptPartySize() {
         System.out.println("게임에 참여할 인원 수는 몇명인가요?:");
-        Scanner sc = new Scanner(System.in);
         return sc.nextInt();
     }
 
