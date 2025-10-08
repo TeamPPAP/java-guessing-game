@@ -7,6 +7,7 @@ public class Game {
     int answerNumber = 0;
     final int ANSWER_MAX_NUM = 100;
     ChanceManager chanceManager;
+    private final Scanner sc = new Scanner(System.in);
 
     public Game() {
         this.setAnswerNumber();
@@ -24,7 +25,6 @@ public class Game {
         this.chanceManager = new ChanceManager(); //플레이어마다 새 기회를 부여받음
 
         System.out.println("1부터 100까지 사이의 숫자를 맞혀보세요❗" + chanceManager.createChanceMessage());
-
 
         boolean flag = false;
         while (!flag) {
@@ -54,7 +54,6 @@ public class Game {
     // 숫자 입력받기
     private int promptNumber() {
         System.out.print("숫자를 입력하세요:");
-        Scanner sc = new Scanner(System.in);
         int input = 0;
         try {
             input = sc.nextInt();
