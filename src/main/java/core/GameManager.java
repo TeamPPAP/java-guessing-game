@@ -9,7 +9,7 @@ public class GameManager {
     Game game;
 
     private final List<Player> players = new ArrayList<>(); // 각 플레이어별 기록을 쌓을 그릇
-    private final Scanner sc = new Scanner(System.in);
+    private final static Scanner sc = new Scanner(System.in);
 
     public void run () {
         boolean shouldShutdown = false;
