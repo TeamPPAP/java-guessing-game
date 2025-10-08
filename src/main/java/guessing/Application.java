@@ -1,7 +1,10 @@
 package guessing;
 
+import core.GameManager;
+
 public class Application {
     public static void main(String[] args) {
-        // TODO: 실행 코드 작성
+        GameManager gameManager = new GameManager();
+        gameManager.run();
     }
 }
