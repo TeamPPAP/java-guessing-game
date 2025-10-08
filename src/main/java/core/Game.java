@@ -7,7 +7,7 @@ public class Game {
     int answerNumber = 0;
     final int ANSWER_MAX_NUM = 100;
     ChanceManager chanceManager;
-    private final Scanner sc = new Scanner(System.in);
+    private static final Scanner sc = new Scanner(System.in);
 
     public Game() {
         this.setAnswerNumber();
@@ -28,10 +28,11 @@ public class Game {
 
         boolean flag = false;
         while (!flag) {
-            int inputNum = promptNumber();
+            int inputNum = promptNumber(); //초과 시 여기로 반환하지말고 다시 입력하기
             if(inputNum != 0)
                 flag = compareToAnswer(inputNum); //true면 정답
 
+            System.out.println("🔥inputNum" + inputNum);
             chanceManager.reduceChance();
 
             if (chanceManager.isOverChance()) break;
@@ -51,21 +52,27 @@ public class Game {
         return chanceManager.getCHANCE_MAX_COUNT() - chanceManager.getChance();
     }
 
-    // 숫자 입력받기
+    /**
+     * 숫자 입력 받기 및 검증
+     * @return 정상 입력 값
+     */
     private int promptNumber() {
-        System.out.print("숫자를 입력하세요:");
-        int input = 0;
-        try {
-            input = sc.nextInt();
+        while (true) {
+            System.out.println("숫자를 입력하세요");
 
-            if( 1 > input || input > 100)
-                throw new IllegalArgumentException("입력가능 범위를 초과하였습니다.");
-        } catch (IllegalArgumentException ex) {
-            System.out.println(ex.getMessage());
-        } catch (InputMismatchException ex) {
-            System.out.println("InputMismatchException : 숫자가 아닙니다.");
+            if (!sc.hasNextInt()) {
+                System.out.println("숫자가 아닙니다.");
+                sc.next();
+                continue;
+            }
+            int input = sc.nextInt();
+
+            if (1 > input || input > 100) {
+                System.out.println("입력 가능 범위가 아닙니다.");
+                continue;
+            }
+            return input;
         }
-        return input;
     }
 
     /**
