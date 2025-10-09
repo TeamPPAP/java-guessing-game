@@ -27,21 +27,18 @@ public class Game {
         System.out.println("1부터 100까지 사이의 숫자를 맞혀보세요❗" + chanceManager.createChanceMessage());
 
         boolean flag = false;
-        while (!flag) {
+        while (!chanceManger.isOverChance()) {
+            // 입력값 검증
             int inputNum = promptNumber();
-            if(inputNum != 0)
-                flag = compareToAnswer(inputNum); //true면 정답
 
-            System.out.println("🔥inputNum" + inputNum);
-            chanceManager.reduceChance();
-
-            if (chanceManager.isOverChance()) break;
-
-            if (!flag) {
-                System.out.println(chanceManager.createChanceMessage());
-                continue;
+            // 정답 비교
+            if (!compareToAnswer(inputNum)) { // 땡!
+                // 기회 차감
+                chanceManager.reduceChance();
+                // 남은 기회 노출
+                chanceManager.createChanceMessage();
             }
-
+            // 맞췄을 때? 몇번만에 맞췄는지 숫자
             return getAttemptsTaken();
         }
         return -1;
