@@ -22,6 +22,7 @@ public class GameManager {
             for (int i = 0; i < partySize; i++) {
                 Player p = createPlayer();
                 tries = game.run(); // 맞추면 시도 횟수, 못 맞추면 -1
+                System.out.println("tries="+tries);
 
                 recordAttemptAndAdd(p, tries);
 
@@ -91,6 +92,7 @@ public class GameManager {
         Player winner = findMinTries(players);
         if (winner != null) {
             System.out.println("우승자는 [" + winner.getId() + "]번 플레이어 입니다");
+            return;
         }
         System.out.println("우승자가 없습니다.");
     }
