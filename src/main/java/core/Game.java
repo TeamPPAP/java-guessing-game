@@ -28,7 +28,7 @@ public class Game {
 
         boolean flag = false;
         while (!flag) {
-            int inputNum = promptNumber(); //초과 시 여기로 반환하지말고 다시 입력하기
+            int inputNum = promptNumber();
             if(inputNum != 0)
                 flag = compareToAnswer(inputNum); //true면 정답
 
