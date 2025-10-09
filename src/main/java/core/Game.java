@@ -27,18 +27,26 @@ public class Game {
         System.out.println("1부터 100까지 사이의 숫자를 맞혀보세요❗" + chanceManager.createChanceMessage());
 
         boolean flag = false;
-        while (!chanceManger.isOverChance()) {
-            // 입력값 검증
+        while (!flag) {
+            // 값 입력 및 검증
             int inputNum = promptNumber();
 
-            // 정답 비교
-            if (!compareToAnswer(inputNum)) { // 땡!
-                // 기회 차감
-                chanceManager.reduceChance();
-                // 남은 기회 노출
-                chanceManager.createChanceMessage();
+            boolean isCorrect;
+            isCorrect = compareToAnswer(inputNum);
+            if (isCorrect) {
+                return getAttemptsTaken();
             }
-            // 맞췄을 때? 몇번만에 맞췄는지 숫자
+            chanceManager.reduceChance();
+
+            if (chanceManager.isOverChance()) {
+                break;
+            }
+
+            if (!flag) {
+                System.out.println(chanceManager.createChanceMessage());
+                continue;
+            }
+
             return getAttemptsTaken();
         }
         return -1;
@@ -46,7 +54,8 @@ public class Game {
 
     // TODO 사용자가 몇번 만에 맞췄는지에 반환
     public int getAttemptsTaken() {
-        return chanceManager.getCHANCE_MAX_COUNT() - chanceManager.getChance();
+        //최대 기회 수 - 현재 기회 = 0 + 1 (1회만에 맞춤)
+        return chanceManager.getCHANCE_MAX_COUNT() - chanceManager.getChance()+1; //+1로 수정해서 1번만에 맞췄을때 정상으로 노출
     }
 
     /**
