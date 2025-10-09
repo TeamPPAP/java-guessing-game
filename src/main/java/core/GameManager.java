@@ -66,10 +66,11 @@ public class GameManager {
         try {
             String answer = sc.nextLine().toUpperCase();
 
+            if(!Arrays.asList("Y", "N").contains(answer))
+                throw new IllegalArgumentException("[Y/N] 이 아닌 다른 값을 입력하였습니다.");
+
             result = answer.equals("Y");
 
-            if(Arrays.asList("Y", "N").contains(result))
-                throw new IllegalArgumentException("[Y/N] 이 아닌 다른 값을 입력하였습니다.");
         } catch (IllegalArgumentException ex){
             System.out.println(ex.getMessage());
         } catch (Exception ex){
