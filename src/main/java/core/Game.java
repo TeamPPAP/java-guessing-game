@@ -21,34 +21,39 @@ public class Game {
         this.answerNumber = (int)(Math.random()*ANSWER_MAX_NUM)+1;
     }
 
+    /**
+     * 숫자 맞히기 한 판을 실행한다.
+     *
+     * <p>반환값 규약:
+     * <p>- 정답을 맞히면: 시도 횟수(양수)
+     * <p>- 모든 기회를 소진하면: -1
+     */
     public int run () {
-        this.chanceManager = new ChanceManager(); //플레이어마다 새 기회를 부여받음
+        // 플레이어마다 새 기회 세트 부여
+        this.chanceManager = new ChanceManager();
 
         System.out.println("1부터 100까지 사이의 숫자를 맞혀보세요❗" + chanceManager.createChanceMessage());
 
-        boolean flag = false;
-        while (!flag) {
-            // 값 입력 및 검증
+        while (true) {
+            // 1) 입력값을 받고 유효성 검증(프롬프트 내부에서 처리)
             int inputNum = promptNumber();
 
-            boolean isCorrect;
-            isCorrect = compareToAnswer(inputNum);
+            // 2) 정답 비교: 맞히면 즉시 종료(성공 케이스 우선 반환)
+            boolean isCorrect = compareToAnswer(inputNum);
             if (isCorrect) {
                 return getAttemptsTaken();
             }
-            chanceManager.reduceChance();
 
+            // 3) 오답이면 기회 차감 후 사용자에게 남은 기회 안내
+            chanceManager.reduceChance();
+            System.out.println(chanceManager.createChanceMessage());
+
+            // 4) 더 이상 기회가 없으면 루프 종료(실패 케이스)
             if (chanceManager.isOverChance()) {
                 break;
             }
-
-            if (!flag) {
-                System.out.println(chanceManager.createChanceMessage());
-                continue;
-            }
-
-            return getAttemptsTaken();
         }
+        // 모든 기회를 소진한 경우
         return -1;
     }
 
