@@ -1,4 +1,4 @@
-package guessing.domain;
+package guessing.computer;
 
 public class NumberGenerator {
 

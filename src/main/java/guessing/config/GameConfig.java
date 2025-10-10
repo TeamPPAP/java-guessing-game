@@ -1,11 +1,11 @@
 package guessing.config;
 
-import guessing.domain.Computer;
-import guessing.domain.MultiGameManager;
-import guessing.domain.NumberGenerator;
+import guessing.computer.Computer;
+import guessing.computer.NumberGenerator;
 import guessing.exception.ExceptionHandler;
 import guessing.io.Input;
-import guessing.service.Game;
+import guessing.service.multi.MultiGame;
+import guessing.service.multi.MultiGameManager;
 
 public class GameConfig {
 
@@ -31,8 +31,8 @@ public class GameConfig {
         return new Input(exceptionHandler());
     }
 
-    public Game game() {
-        return new Game(gameManager(), input(), exceptionHandler());
+    public MultiGame game() {
+        return new MultiGame(gameManager(), input(), exceptionHandler());
     }
 
 }

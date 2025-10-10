@@ -1,4 +1,4 @@
-package guessing.domain;
+package guessing.player;
 
 public class Chance {
     private int chance;
@@ -7,15 +7,11 @@ public class Chance {
         this.chance = 0;
     }
 
-    public int getChance() {
+    public int getAttempts() {
         return chance;
     }
 
-    public boolean isMeet(int n) {
-        return chance == n;
-    }
-
-    public void plus() {
+    public void increase() {
         chance++;
     }
 }

@@ -1,13 +1,13 @@
 package guessing;
 
 import guessing.config.GameConfig;
-import guessing.service.Game;
+import guessing.service.multi.MultiGame;
 
 public class Application {
 
     public static void main(String[] args) {
         GameConfig gameConfig = new GameConfig();
-        Game game = gameConfig.game();
+        MultiGame game = gameConfig.game();
         game.play();
     }
 }
