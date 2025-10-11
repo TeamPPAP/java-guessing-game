@@ -74,4 +74,3 @@ public class GameController {
         return command.isRetry();
     }
 }
-
