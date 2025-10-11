@@ -1,10 +1,9 @@
 package guessing.service.multi;
 
 import guessing.exception.ExceptionHandler;
-import guessing.service.Game;
-import guessing.service.GameManager;
-import guessing.service.dto.GuessResult;
 import guessing.io.Input;
+import guessing.service.Game;
+import guessing.service.dto.GuessResult;
 
 public class MultiGame extends Game {
 
@@ -16,7 +15,7 @@ public class MultiGame extends Game {
         this.multiGameManager = gameManager;
     }
 
-    @Deprecated
+    @Override
     public void play() {
         while (true) {
             int player = setPlayerNumber();
