@@ -5,7 +5,6 @@ import guessing.domain.GameStatus;
 import guessing.domain.Num;
 import guessing.domain.RetryCommand;
 import guessing.domain.generator.NumberGenerator;
-import guessing.dto.RoundResult;
 import guessing.view.InputView;
 import guessing.view.OutputView;
 
@@ -36,20 +35,12 @@ public class GameController {
 
         while (true) {
             Num guess = readValidNumber();
-            RoundResult result = round.guess(guess);
-            GameStatus status = result.getGameStatus();
+            GameStatus result = round.guess(guess);
+            result.execute(outputView, round);
 
-            if (status == GameStatus.WIN) {
-                outputView.printWin(round.getTryCount());
+            if(!result.isOngoing()){
                 break;
             }
-            
-            if (status == GameStatus.LOSE) {
-                outputView.printGameOver(round.getRandomNumber());
-                break;
-            }
-
-            outputView.printHint(result.getHint(), round.getRemainingCount());
         }
     }
 
@@ -83,4 +74,3 @@ public class GameController {
         return command.isRetry();
     }
 }
-

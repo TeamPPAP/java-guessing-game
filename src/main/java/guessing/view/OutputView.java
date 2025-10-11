@@ -35,7 +35,7 @@ public class OutputView {
         System.out.printf(RANDOM_NUMBER_RELEASE.getMessage(), randomNumber);
         System.out.println();
     }
-    
+
     public void printNewGameStart() {
         System.out.println();
         System.out.println(NEW_GAME_START_MESSAGE.getMessage());
